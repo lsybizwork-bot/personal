@@ -7,13 +7,15 @@ import type { Lang } from "@/lib/db/types";
 const LANGS: Lang[] = ["ko", "ja", "zh"];
 const LANG_LABEL: Record<Lang, string> = { ko: "한국어", ja: "日本語", zh: "中文" };
 
-interface Row { lang: Lang; site_name: string; hero_title: string; hero_desc: string; about_first: string; about_body: string; }
+interface Row { lang: Lang; site_name: string; hero_title: string; hero_desc: string; about_paragraphs: string; }
+
+function emptyRow(lang: Lang): Row {
+  return { lang, site_name: "", hero_title: "", hero_desc: "", about_paragraphs: "" };
+}
 
 export default function AdminAboutPage() {
   const [rows, setRows] = useState<Record<Lang, Row>>({
-    ko: { lang: "ko", site_name: "", hero_title: "", hero_desc: "", about_first: "", about_body: "" },
-    ja: { lang: "ja", site_name: "", hero_title: "", hero_desc: "", about_first: "", about_body: "" },
-    zh: { lang: "zh", site_name: "", hero_title: "", hero_desc: "", about_first: "", about_body: "" },
+    ko: emptyRow("ko"), ja: emptyRow("ja"), zh: emptyRow("zh"),
   });
   const [tab, setTab] = useState<Lang>("ko");
   const [saved, setSaved] = useState(false);
@@ -23,7 +25,18 @@ export default function AdminAboutPage() {
     supabase.from("profiles").select("*").then(({ data }) => {
       if (data) {
         const next = { ...rows };
-        data.forEach((d: Row) => { next[d.lang as Lang] = d; });
+        data.forEach((d: Record<string, string>) => {
+          const lang = d.lang as Lang;
+          // about_body를 about_paragraphs로 합침 (about_first + about_body)
+          const parts = [d.about_first, d.about_body].filter(Boolean).join("\n");
+          next[lang] = {
+            lang,
+            site_name: d.site_name || "",
+            hero_title: d.hero_title || "",
+            hero_desc: d.hero_desc || "",
+            about_paragraphs: parts,
+          };
+        });
         setRows(next);
       }
       setLoading(false);
@@ -35,8 +48,16 @@ export default function AdminAboutPage() {
   }
 
   async function save() {
-    const row = rows[tab];
-    await supabase.from("profiles").upsert({ ...row }, { onConflict: "lang" });
+    const r = rows[tab];
+    const paras = r.about_paragraphs.split("\n").map(s => s.trim()).filter(Boolean);
+    await supabase.from("profiles").upsert({
+      lang: tab,
+      site_name: r.site_name,
+      hero_title: r.hero_title,
+      hero_desc: r.hero_desc,
+      about_first: paras[0] || "",
+      about_body: paras.slice(1).join("\n"),
+    }, { onConflict: "lang" });
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
   }
@@ -60,17 +81,24 @@ export default function AdminAboutPage() {
       {loading ? <p style={s.empty}>불러오는 중…</p> : (
         <div style={s.form}>
           <Field label="사이트 이름" value={r.site_name} onChange={v => update("site_name", v)} />
-          <Field label="Hero 제목" value={r.hero_title} onChange={v => update("hero_title", v)} />
-          <Field label="Hero 설명" value={r.hero_desc} onChange={v => update("hero_desc", v)} />
-          <Field label="About 첫 문단 (강조)" value={r.about_first} onChange={v => update("about_first", v)} textarea />
-          <Field label="About 본문 (줄바꿈으로 문단 구분)" value={r.about_body} onChange={v => update("about_body", v)} textarea rows={8} />
+          <Field label="첫 화면 제목" value={r.hero_title} onChange={v => update("hero_title", v)} />
+          <Field label="첫 화면 부제" value={r.hero_desc} onChange={v => update("hero_desc", v)} />
+          <Field
+            label="나의 이야기 — 문단별 한 줄 (줄바꿈으로 구분)"
+            value={r.about_paragraphs}
+            onChange={v => update("about_paragraphs", v)}
+            textarea
+            rows={10}
+          />
         </div>
       )}
     </div>
   );
 }
 
-function Field({ label, value, onChange, textarea, rows = 3 }: { label: string; value: string; onChange: (v: string) => void; textarea?: boolean; rows?: number }) {
+function Field({ label, value, onChange, textarea, rows = 3 }: {
+  label: string; value: string; onChange: (v: string) => void; textarea?: boolean; rows?: number;
+}) {
   return (
     <label style={s.field}>
       <span style={s.fieldLabel}>{label}</span>
