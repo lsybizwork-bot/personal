@@ -110,7 +110,7 @@ export const projectGroups: ProjectGroup[] = [
   },
   {
     field: "해외 기업 컨설팅 · 통역",
-    summary: "해외 기업의 한국 시장 진출 컨설팅(시장조사, 유통·상품기획(MD), 홍보·마케팅) 및 비즈니스 통역",
+    summary: "한국 시장 진출 컨설팅 및 비즈니스 통역",
     hideCount: true,
     projects: [
       { title: "시장조사" },

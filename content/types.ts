@@ -13,6 +13,8 @@ export const LANG_INFO: Record<Lang, { label: string; htmlLang: string }> = {
 export type Profile = {
   siteName: string;
   description: string;
+  name?: string;
+  age?: string;
   hero: { kicker: string; title: string; lead: string; buttonLabel: string };
   about: { title: string; paragraphs: string[] };
   contact: { message: string; kakaoLabel: string; emailLabel: string };

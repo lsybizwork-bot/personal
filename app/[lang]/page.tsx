@@ -33,6 +33,11 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           <div>
             <span className="kick">{profile.hero.kicker}</span>
             <h1>{profile.hero.title}</h1>
+            {(profile.name || profile.age) && (
+              <p className="ident">
+                {profile.name}{profile.name && profile.age && " · "}{profile.age}
+              </p>
+            )}
           </div>
         </div>
       </header>
@@ -174,23 +179,16 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         <section id="interests" className="split" aria-labelledby="h-interests">
           <span className="pg">04 — Interests</span>
           <div>
-            <h2 id="h-interests" style={{ marginBottom: 40 }}>
-              {interests.title}
-            </h2>
-            <div className="accs">
-              {interests.likes.map((l) => (
-                <details className="acc like" key={l.title}>
-                  <summary>{l.title}</summary>
-                  <p>{l.detail}</p>
-                </details>
-              ))}
-              {interests.dislikes.length > 0 && (
-                <details className="acc dis">
-                  <summary>{interests.dislikesLabel}</summary>
-                  <p>{interests.dislikes.join(" · ")}</p>
-                </details>
-              )}
-            </div>
+            <h2 id="h-interests">{interests.title}</h2>
+            <p className="int-list">
+              {interests.likes.map((l) => l.title).join(" · ")}
+            </p>
+            {interests.dislikes.length > 0 && (
+              <>
+                <h3 className="int-sub">{interests.dislikesLabel}</h3>
+                <p className="int-list">{interests.dislikes.join(" · ")}</p>
+              </>
+            )}
           </div>
         </section>
 

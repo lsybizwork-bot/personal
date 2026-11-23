@@ -6,6 +6,10 @@ export const profile: Profile = {
   /** 사이트 이름 (브라우저 탭, 상단 로고, 검색 결과 제목) */
   siteName: "나를 알아가는 기록",
 
+  /** 이름 · 나이 — 헤더 영역에 표시됩니다. */
+  name: "이름",
+  age: "나이",
+
   /** 검색 결과에 나오는 사이트 설명 */
   description: "지금까지의 경험과 생각, 관심사와 새로운 도전을 하나씩 담아가는 개인 아카이브입니다.",
 
@@ -32,7 +36,7 @@ export const profile: Profile = {
 
   /** Contact — 실제 카카오톡·이메일 주소는 content/site.ts 에 넣습니다. */
   contact: {
-    message: "이 기록이 많은 소통의 출발점이 되기를 바랍니다.",
+    message: "이 기록이 연결의 계기가 됐으면 합니다.",
     kakaoLabel: "카카오톡으로 연락하기",
     emailLabel: "이메일 보내기",
   },
