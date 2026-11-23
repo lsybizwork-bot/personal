@@ -180,14 +180,19 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           <span className="pg">04 — Interests</span>
           <div>
             <h2 id="h-interests">{interests.title}</h2>
-            <p className="int-list">
-              {interests.likes.map((l) => l.title).join(" · ")}
-            </p>
+            <dl className="int-dl">
+              {interests.likes.map((l) => (
+                <div key={l.title} className="int-row">
+                  <dt>{l.title}</dt>
+                  <dd>{l.detail}</dd>
+                </div>
+              ))}
+            </dl>
             {interests.dislikes.length > 0 && (
-              <>
-                <h3 className="int-sub">{interests.dislikesLabel}</h3>
-                <p className="int-list">{interests.dislikes.join(" · ")}</p>
-              </>
+              <div className="int-dis">
+                <span className="int-sub">{interests.dislikesLabel}</span>
+                <p>{interests.dislikes.join(" · ")}</p>
+              </div>
             )}
           </div>
         </section>

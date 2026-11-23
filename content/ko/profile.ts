@@ -7,7 +7,7 @@ export const profile: Profile = {
   siteName: "나를 알아가는 기록",
 
   /** 이름 · 나이 — 헤더 영역에 표시됩니다. */
-  name: "이소영 李昭英",
+  name: "이소영",
   age: "1984.05",
 
   /** 검색 결과에 나오는 사이트 설명 */

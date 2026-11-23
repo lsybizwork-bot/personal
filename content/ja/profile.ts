@@ -5,6 +5,9 @@ export const profile: Profile = {
   siteName: "私を知っていく記録",
   description: "これまでの経験と考え、関心事と新しい挑戦をひとつずつ綴っていく個人アーカイブです。",
 
+  name: "李昭英",
+  age: "1984.05",
+
   hero: {
     kicker: "Professional Personal Archive",
     title: "私を知っていく記録",

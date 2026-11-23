@@ -19,7 +19,7 @@ export const career: Career = {
   ],
 
   /** 제목만 한 줄로 보여줄 경력 (펼쳐지지 않음). 세부 내용은 projects.ts 의 같은 이름 분야에 있습니다. */
-  extraLines: ["해외 기업 컨설팅 · 통역"],
+  extraLines: [],
 
   /** 그 밖의 경험 (누르면 펼쳐짐) — 비워 두면 화면에 나오지 않습니다.
    *  예: { field: "분류", role: "내용" } */
