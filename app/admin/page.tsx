@@ -9,6 +9,7 @@ const sections = [
   { href: "/admin/projects", label: "Projects", desc: "프로젝트 그룹 · 항목" },
   { href: "/admin/interests", label: "Interests", desc: "관심사 목록" },
   { href: "/admin/life", label: "Life", desc: "사진 · 일상 기록" },
+  { href: "/admin/contact", label: "Contact", desc: "이메일 · 카카오 · 라인 · 위챗" },
 ];
 
 export default function AdminDashboard() {

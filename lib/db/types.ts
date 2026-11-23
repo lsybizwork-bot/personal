@@ -8,6 +8,10 @@ export interface ProfileRow {
   hero_desc: string | null;
   about_first: string | null;
   about_body: string | null;
+  contact_email: string | null;
+  contact_kakao: string | null;
+  contact_line: string | null;
+  contact_wechat: string | null;
   updated_at: string;
 }
 

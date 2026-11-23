@@ -36,7 +36,7 @@ export const profile: Profile = {
 
   /** Contact — 실제 카카오톡·이메일 주소는 content/site.ts 에 넣습니다. */
   contact: {
-    message: "이 기록이 연결의 계기가 됐으면 합니다.",
+    message: "더 많은 이야기를 나누고 싶습니다.",
     kakaoLabel: "카카오톡으로 연락하기",
     emailLabel: "이메일 보내기",
   },
